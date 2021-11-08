@@ -1,3 +1,13 @@
+"""
+Strong BUY
+Trading BUY, BUY, 매수, Outperform
+보유, HOLD, 중립, Marketperform, Neutral
+없음,NR
+비중축소/REDUCE
+Underperform/Sell
+"""
+
+
 recommendation_lookup = {
     'STRONG BUY': 'STRONG_BUY',
     'Strong Buy': 'STRONG_BUY',
