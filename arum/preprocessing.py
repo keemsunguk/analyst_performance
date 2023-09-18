@@ -27,16 +27,23 @@ def change_col_names(s_df: pd) -> pd:
 
 def check_report_date(s_df: pd) -> pd:
     for k, r in s_df.iterrows():
-        if type(r['report_date']) != datetime:
+        if type(r['report_date']) == str:
             s_df.at[k, 'report_date'] = datetime.strptime(r['report_date'], '%m/%d/%y')
     s_df['report_month'] = s_df['report_date'].apply(lambda x: x.strftime('%Y%m'))
     return s_df
 
 
 def build_labels(s_df: pd) -> pd:
-    s_df['__label1'] = s_df.apply(lambda x: 1 if x.closing_1 <= x.closing else 0, axis=1)  # 종가 > 어제종가
-    s_df['__label2'] = s_df.apply(lambda x: 1 if x.closing <= x.high_1 else 0, axis=1)  # 어제고가 > 종가
-    s_df['__label3'] = s_df.apply(lambda x: 1 if x.closing_1 <= x.high_1 else 0, axis=1)  # 어제고가 > 어제종가
+    """
+    A1 = (발간일시가 - 전일종가) / 전일종가
+    A2 = (고가 - 시가) / 시가
+    A3 = (종가 - 시가) / 시가
+    :param s_df:
+    :return:
+    """
+    s_df['__label1'] = s_df.apply(lambda x: 1 if x.A1 > 0 else 0, axis=1)  # 종가 > 어제종가
+    s_df['__label2'] = s_df.apply(lambda x: 1 if x.A2 > 0 else 0, axis=1)  # 어제고가 > 종가
+    s_df['__label3'] = s_df.apply(lambda x: 1 if x.A3 > 0 else 0, axis=1)  # 어제고가 > 어제종가
 
     # (시가-전일종가)/전일종가
     s_df['gap_up_ratio'] = s_df.apply(

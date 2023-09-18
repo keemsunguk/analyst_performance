@@ -6,6 +6,8 @@ new_col_names = {
     '시가': 'opening',
     '전일종가': 'closing_1',
     '전전일종가': 'closing_2',
+}
+"""
     '고가1': 'high_1',
     '고가2': 'high_2',
     '고가3': 'high_3',
@@ -57,3 +59,4 @@ new_col_names = {
     '고가49': 'high_49',
     '고가50': 'high_50',
 }
+"""
