@@ -44,6 +44,10 @@ def build_labels(s_df: pd) -> pd:
     s_df['__label1'] = s_df.apply(lambda x: 1 if x.A1 > 0 else 0, axis=1)  # 종가 > 어제종가
     s_df['__label2'] = s_df.apply(lambda x: 1 if x.A2 > 0 else 0, axis=1)  # 어제고가 > 종가
     s_df['__label3'] = s_df.apply(lambda x: 1 if x.A3 > 0 else 0, axis=1)  # 어제고가 > 어제종가
+    s_df['__label4'] = s_df.apply(lambda x: 1 if (x.A1 > 0 and x.A3 > 0) else 0, axis=1)  # both A1 and A3 are positive
+    s_df['__label5'] = s_df.apply(lambda x: 1 if x.H25 > x.high else 0, axis=1)  # maintaining gap-up 25
+    s_df['__label6'] = s_df.apply(lambda x: 1 if x.H50 > x.high  else 0, axis=1)  # maintaining gap-up 50
+    s_df['__label7'] = s_df.apply(lambda x: 1 if (x.H25 > x.high and x.H50 > x.high) else 0, axis=1)  # both 5 and 6
 
     # (시가-전일종가)/전일종가
     s_df['gap_up_ratio'] = s_df.apply(
